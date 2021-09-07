@@ -53,9 +53,12 @@ if (process.env.NODE_ENV === "development" || process.env.NODE_ENV === "test") {
   app.use(morgan("dev"));
 } else {
   // create a write stream (in append mode)
-  let accessLogStream = fs.createWriteStream(path.join(__dirname, "access.log"), {
-    flags: "a",
-  });
+  let accessLogStream = fs.createWriteStream(
+    path.join(__dirname, "access.log"),
+    {
+      flags: "a",
+    }
+  );
 
   // setup the logger
   app.use(morgan("combined", { stream: accessLogStream }));
@@ -122,7 +125,7 @@ app.use(errorHandler);
 /* Run the server */
 /* istanbul ignore next */
 if (process.env.NODE_ENV !== "test") {
-  const server = app.listen(3000, () => console.log(`Server running on 3000`));
+  const server = app.listen(3002, () => console.log(`Server running on 3000`));
 
   // Enable socket.io
   const io = require("socket.io")(server, {

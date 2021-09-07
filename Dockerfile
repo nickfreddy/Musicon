@@ -1,4 +1,4 @@
-FROM node:alpine-14
+FROM node:14-alpine
 WORKDIR /musicon
 COPY package.json .
 RUN npm install

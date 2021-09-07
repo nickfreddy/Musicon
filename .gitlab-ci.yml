@@ -30,7 +30,7 @@ stages:
 #     - npm run test
 #   # Defines the names of branches and tags the job runs for
 #   only:
-#     - production
+#     - dockerize
 
 # Deploy job
 deploy:
@@ -39,7 +39,7 @@ deploy:
   stage: deploy
   # Config to use our Runner with Executor Shell
   tags:
-    - musicon
+    - musicon-dockerize
   script:
     # Only copy changed files to project folder
     - cp -r -u * $PROJECT_DIR
@@ -62,4 +62,4 @@ deploy:
     - npm run stop || true
     - npm run start
   only:
-    - production
+    - dockerize
