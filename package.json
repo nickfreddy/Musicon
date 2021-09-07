@@ -9,7 +9,7 @@
     "dev": "NODE_ENV=development npx nodemon app",
     "test": "NODE_ENV=test jest --testTimeout=30000 --coverage --forceExit --verbose false",
     "stop": "killall node",
-    "start": "NODE_ENV=production node app > /dev/null 2>&1 &"
+    "start": "NODE_ENV=production node app"
   },
   "repository": {
     "type": "git",

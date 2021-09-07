@@ -105,7 +105,7 @@ app.use("/users", users);
 app.use("/albums", albums);
 
 app.get("/", (req, res) => {
-  res.send("Hello");
+  res.status(200).json({ message: "Hello world, from musicon" });
 });
 
 /* If route not found */
@@ -125,7 +125,7 @@ app.use(errorHandler);
 /* Run the server */
 /* istanbul ignore next */
 if (process.env.NODE_ENV !== "test") {
-  const server = app.listen(3002, () => console.log(`Server running on 3000`));
+  const server = app.listen(3002, () => console.log(`Server running on 3002`));
 
   // Enable socket.io
   const io = require("socket.io")(server, {

@@ -57,9 +57,9 @@ deploy:
     - echo "S3_BUCKET"=$S3_BUCKET >> .env.production
     - echo "S3_SECRET_KEY"=$S3_SECRET_KEY >> .env.production
     - echo "S3_URL"=$S3_URL >> .env.production
-    - npm i --only=prod
-    # Restart NodeJS service
-    - npm run stop || true
-    - npm run start
+    # - DELETE PREVIOUS CONTAINER
+    # - DELETE PREVIOUS IMAGE
+    - docker build -t musicon .
+    - docker run -p 3002:3002 -d musicon
   only:
     - dockerize
