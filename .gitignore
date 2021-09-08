@@ -10,3 +10,4 @@ seeders/audio/output
 seeders/audio/song-titles.json
 seeders/audio/uploadSongs.js
 seeders/audio/download_songs.py
+.gitlab-ci.yml
