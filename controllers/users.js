@@ -142,12 +142,15 @@ class Users {
         .skip(pageSize * (currentPage - 1))
         .limit(pageSize);
 
+      data = data.map((el) => el.songId);
       if (!data) {
         return next({ message: "Song not found.", statusCode: 404 });
       }
 
-      const songs = data.map((el) => el.songId);
-      res.status(200).json({ songs });
+      for (let i = 0; i < data.length; i++) {
+        data[i].isLiked = true;
+      }
+      res.status(200).json({ data });
     } catch (error) {
       next(error);
     }

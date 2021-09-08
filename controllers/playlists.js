@@ -120,6 +120,7 @@ class Playlists {
         const like = await Like.findOne({
           songId: song._id,
           authorId: req.user.user,
+          like: true,
         });
 
         like
