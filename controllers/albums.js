@@ -1,5 +1,5 @@
 // Adib's Code
-const { Album, Artist, Song } = require("../models");
+const { Album, Artist, Song, Like } = require("../models");
 
 class AlbumCtrl {
   async getNewAlbums(req, res, next) {
@@ -59,6 +59,31 @@ class AlbumCtrl {
           model: Artist,
           select: "name photo",
         });
+
+      for (let i = 0; i < album.songs.length; i++) {
+        const like = await Like.findOne({
+          songId: album.songs[i]._id,
+          authorId: req.user.user,
+        });
+
+        let isLiked;
+        like ? (isLiked = true) : (isLiked = false);
+
+        const getSong = await Song.findById(album.songs[i]._id)
+          .populate({
+            path: "artistId",
+            model: Artist,
+            select: { _id: 1, name: 1, photo: 1 },
+          })
+          .populate({
+            path: "albumId",
+            model: Album,
+            select: { _id: 1, albumTitle: 1 },
+          });
+        getSong.isLiked = isLiked;
+
+        album.songs[i] = getSong;
+      }
 
       res.status(200).json({ album });
     } catch (error) {
