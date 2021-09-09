@@ -38,9 +38,9 @@ exports.sendAuthorEmail = async (req, res, next) => {
       `,
       };
 
+      /* istanbul ignore next */
       transporter.sendMail(options, function (err, info) {
         if (error) {
-          /* istanbul ignore next */
           next(error);
           return;
         }

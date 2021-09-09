@@ -7,8 +7,8 @@ exports.facebookLoginSanitizerValidator = async (req, res, next) => {
 
     if (user) {
       const isFacebook = await bcrypt.compare("facebook", user.password);
-
       if (!isFacebook) {
+        /* istanbul ignore next */
         next({
           statusCode: 401,
           message: "Please login using another method.",

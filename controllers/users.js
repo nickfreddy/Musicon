@@ -20,15 +20,12 @@ class Users {
   async updateDataUserById(req, res, next) {
     try {
       if (req.files) {
+        /* istanbul ignore next */
         req.body.photo = "users/" + req.files.photo.nameCompress;
       }
-      const data = await User.findOneAndUpdate(
-        { _id: req.params.id },
-        req.body,
-        {
-          new: true,
-        }
-      ).select("-password -__v");
+      const data = await User.findOneAndUpdate({ _id: req.params.id }, req.body, {
+        new: true,
+      }).select("-password -__v");
       if (!data) {
         return next({ message: "User not found.", statusCode: 404 });
       }
@@ -144,6 +141,7 @@ class Users {
 
       data = data.map((el) => el.songId);
       if (!data) {
+        /* istanbul ignore next */
         return next({ message: "Song not found.", statusCode: 404 });
       }
 

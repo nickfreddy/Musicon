@@ -1,13 +1,15 @@
 const req = require("supertest");
 const app = require("../app");
 const mongoose = require("mongoose");
-const { User, Playlist, Artist, Album, Song } = require("../models");
+const { User, Playlist, Artist, Album, Song, Like } = require("../models");
 const jwt = require("jsonwebtoken");
 const faker = require("faker");
+const fs = require("fs");
 let createUser;
 let userToken;
 let createPlaylist;
 let createSong;
+let createLike;
 
 beforeAll(async () => {
   createUser = await User.create({
@@ -44,6 +46,11 @@ beforeAll(async () => {
   createPlaylist.songs.push(createSong._id);
   await createPlaylist.save();
 
+  createLike = await Like.create({
+    like: true,
+    authorId: createUser._id,
+    songId: createSong._id,
+  });
   userToken = jwt.sign({ user: createUser._id }, process.env.JWT_SECRET);
 });
 
@@ -115,6 +122,18 @@ describe("Update User Data By Id", () => {
     expect(res.body).toHaveProperty("errors");
   });
 });
+describe("Upload endpoint", () => {
+  it("Successfully uploads jpg image", (done) => {
+    const res = req(app)
+      .put(`/users/updatedata/${createUser._id}`)
+      .set("Authorization", `Bearer ${userToken}`)
+      .set("content-type", "application/octet-stream");
+
+    const imgStream = fs.createReadStream(`${__dirname}/testUserImage.jpg`);
+    imgStream.on("end", () => res.end(done));
+    imgStream.pipe(res, { end: false });
+  });
+});
 
 describe("Update User Password By Id", () => {
   it("Update User Password By Id success", async () => {
@@ -183,6 +202,38 @@ describe("Get User Top artist", () => {
     const res = await req(app)
       .get(`/users/${createUser._id}/topartists`)
       .query({ title: "a", limit: 3 });
+    expect(res.statusCode).toEqual(401);
+    expect(res.body).toBeInstanceOf(Object);
+    expect(res.body).toHaveProperty("errors");
+  });
+});
+
+describe("get liked songs", () => {
+  it("get liked song success", async () => {
+    const res = await req(app)
+      .get(`/users/${createUser._id}/likedsongs`)
+      .set("Authorization", `Bearer ${userToken}`);
+    expect(res.statusCode).toEqual(200);
+    expect(res.body).toBeInstanceOf(Object);
+    expect(res.body).toHaveProperty("data");
+  });
+  it("get liked songs not authorize", async () => {
+    const res = await req(app).get(`/users/${createUser._id}/likedsongs`);
+    expect(res.statusCode).toEqual(401);
+    expect(res.body).toBeInstanceOf(Object);
+    expect(res.body).toHaveProperty("errors");
+  });
+});
+
+describe("Delete current user", () => {
+  it("Delete current user success", async () => {
+    const res = await req(app).delete(`/auth/deleteme`).set("Authorization", `Bearer ${userToken}`);
+    expect(res.statusCode).toEqual(200);
+    expect(res.body).toBeInstanceOf(Object);
+    expect(res.body).toHaveProperty("message");
+  });
+  it("Delete current user not authorize", async () => {
+    const res = await req(app).delete(`/auth/deleteme`);
     expect(res.statusCode).toEqual(401);
     expect(res.body).toBeInstanceOf(Object);
     expect(res.body).toHaveProperty("errors");

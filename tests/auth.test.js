@@ -16,7 +16,7 @@ beforeAll(async () => {
 
 describe("No Endpoint detected", () => {
   it("No", async () => {
-    const res = await req(app).get("");
+    const res = await req(app).get("/noendpoint");
     expect(res.statusCode).toEqual(404);
     expect(res.body).toBeInstanceOf(Object);
   });
@@ -37,7 +37,17 @@ describe("Sign Up", () => {
     const res = await req(app).post("/auth/signup").send({
       username: "",
       fullname: "rizky ade pratama putra",
-      email: "rizkyap90s@gmail.com",
+      email: "rizkyap90sgmail.com",
+      password: "Kiki123!",
+    });
+    expect(res.statusCode).toEqual(400);
+    expect(res.body).toBeInstanceOf(Object);
+  });
+  it("Sign Up email not valid", async () => {
+    const res = await req(app).post("/auth/signup").send({
+      username: "usernamehaha",
+      fullname: "rizky ade pratama putra",
+      email: "dsa.com",
       password: "Kiki123!",
     });
     expect(res.statusCode).toEqual(400);
@@ -72,6 +82,29 @@ describe("Login", () => {
     expect(res.statusCode).toEqual(200);
     expect(res.body).toBeInstanceOf(Object);
   });
+  it("Login google v2 success", async () => {
+    const res = await req(app).post("/auth/google/v2").send({
+      email: "rizkyap90@gmail.com",
+      familyName: "rizkyap90@gmail.com",
+      givenName: "Rezki Ade Pratama Putra",
+      googleId: "032930239092309013",
+      imageUri: "photo.jpeg",
+      name: "kiki",
+    });
+    expect(res.statusCode).toEqual(200);
+    expect(res.body).toBeInstanceOf(Object);
+  });
+  it("Login facebook v2 success", async () => {
+    const res = await req(app).post("/auth/facebook/v2").send({
+      email: "rizkyap90ss@gmail.com",
+      fullname: "rizkyap90ss@gmail.com",
+      userID: "03293023909231309013",
+      photo: "photo.jpeg",
+    });
+    expect(res.statusCode).toEqual(200);
+    expect(res.body).toBeInstanceOf(Object);
+  });
+
   it("Login user not found", async () => {
     const res = await req(app).post("/auth/login").send({
       username: "rizkyap90shaha",

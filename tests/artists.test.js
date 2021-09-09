@@ -22,7 +22,7 @@ beforeAll(async () => {
   });
 
   const artistTest = await Artist.create({
-    name: faker.name.findName() + Math.floor(Math.random() * 1000),
+    name: faker.name.findName() + Math.floor(Math.random() * 1000) + "a",
   });
 
   const albumTest = await Album.create({

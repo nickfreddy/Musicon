@@ -26,7 +26,7 @@ beforeAll(async () => {
   });
 
   const albumTest = await Album.create({
-    albumTitle: faker.commerce.product(),
+    albumTitle: faker.commerce.product() + "a",
     artistId: artistTest._id,
     releaseDate: "2021",
   });

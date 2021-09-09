@@ -3,10 +3,7 @@ const express = require("express");
 
 const { isLoggedIn } = require("../middlewares/auth/local");
 
-const {
-  getRatingValidator,
-  ratingValidator,
-} = require("../middlewares/validators/ratings");
+const { getRatingValidator, ratingValidator } = require("../middlewares/validators/ratings");
 
 const { sendAuthorEmail } = require("../middlewares/mailers/rateNotification");
 const { sendPushNotification } = require("../middlewares/pushNotification");

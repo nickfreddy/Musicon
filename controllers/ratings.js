@@ -38,6 +38,7 @@ class RatingCtrl {
             new: true,
           }
         );
+        /* istanbul ignore next */
         updateRating.save();
       } else {
         req.body.playlistId = req.params.playlistId;

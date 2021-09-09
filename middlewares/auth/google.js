@@ -17,6 +17,7 @@ passport.use(
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
       callbackURL: process.env.GOOGLE_CALLBACK_URL,
     },
+    /* istanbul ignore next */
     async function (accessToken, refreshToken, profile, done) {
       let user = await User.findOne({ email: profile._json.email });
 

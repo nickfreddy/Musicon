@@ -51,6 +51,9 @@ beforeAll(async () => {
     songDuration: "69",
     tags: "songtest, albumtest, artisttest",
   });
+  createPlaylist.songs.push(createSong._id);
+  await createPlaylist.save();
+
   playlistId = createPlaylist._id;
 });
 

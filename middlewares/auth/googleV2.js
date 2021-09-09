@@ -28,20 +28,3 @@ exports.googleLoginSanitizerValidator = async (req, res, next) => {
     next(error);
   }
 };
-
-exports.updateUserDatabase = async (req, res, next) => {
-  try {
-    let user = await User.findOne({ email: req.body.email });
-
-    if (!user) {
-      user = await User.create(req.body);
-    }
-
-    req.user = user;
-
-    next();
-  } catch (error) {
-    /* istanbul ignore next */
-    next(error);
-  }
-};

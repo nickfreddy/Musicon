@@ -18,6 +18,7 @@ passport.use(
       callbackURL: process.env.FACEBOOK_CALLBACK_URL,
       profileFields: ["id", "displayName", "photos", "email"],
     },
+    /* istanbul ignore next */
     async function (accessToken, refreshToken, profile, done) {
       let user = await User.findOne({ email: profile._json.email });
 

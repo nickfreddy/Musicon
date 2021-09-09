@@ -10,6 +10,7 @@ class LikeCtrl {
       });
 
       if (!data) {
+        /* istanbul ignore next */
         res.status(200).json({ like: false });
       } else {
         res.status(200).json({ like: data.like });
@@ -27,6 +28,7 @@ class LikeCtrl {
         authorId: req.user.user,
       });
 
+      /* istanbul ignore else */
       if (data) {
         const updateLike = await Like.findOneAndUpdate(
           {

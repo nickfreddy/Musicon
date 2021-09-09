@@ -108,6 +108,7 @@ describe("Set Rating", () => {
         rating: "3",
       });
 
+    console.log(response.body);
     expect(response.statusCode).toEqual(201);
     expect(response.body).toBeInstanceOf(Object);
     expect(response.body).toHaveProperty("message");

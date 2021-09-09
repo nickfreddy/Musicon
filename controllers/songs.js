@@ -11,11 +11,13 @@ class SongCtrl {
       });
 
       if (!data) {
+        /* istanbul ignore next */
         return next({ message: "Song not found.", statusCode: 404 });
       }
 
       res.status(200).json({ data });
     } catch (error) {
+      /* istanbul ignore next */
       next(error);
     }
   }
@@ -124,6 +126,7 @@ class SongCtrl {
         .sort("-releaseDate");
 
       if (songs.length === 0) {
+        /* istanbul ignore next */
         return next({ message: "Song not found.", statusCode: 404 });
       }
 
@@ -156,6 +159,7 @@ class SongCtrl {
         .sort("-releaseDate");
 
       if (songs.length === 0) {
+        /* istanbul ignore next */
         return next({ message: "Song not found.", statusCode: 404 });
       }
 

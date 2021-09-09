@@ -55,7 +55,7 @@ describe("Get Songs by Title", () => {
   it("Success", async () => {
     const response = await request(app)
       .get("/songs/search")
-      .query({ title: "a", limit: 3 })
+      .query({ tag: "test", limit: 3, page: 1 })
       .set("Authorization", `Bearer ${userToken}`);
 
     expect(response.statusCode).toEqual(200);
@@ -117,7 +117,7 @@ describe("Get Songs by Tag", () => {
   it("Success", async () => {
     const response = await request(app)
       .get("/songs/search_tags")
-      .query({ tag: "test", limit: 3 })
+      .query({ tag: "test", limit: 3, page: 1 })
       .set("Authorization", `Bearer ${userToken}`);
 
     expect(response.statusCode).toEqual(200);

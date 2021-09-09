@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 const path = require("path");
 const crypto = require("crypto");
 const sharp = require("sharp");
@@ -44,8 +45,8 @@ exports.uploadImage = async (req, res, next) => {
         errorMessages.push("File must be an image");
       }
 
-      if (file.size > 1000000) {
-        errorMessages.push("Image must be less than 1MB");
+      if (file.size > 2000000) {
+        errorMessages.push("Image must be less than 2MB");
       }
       if (errorMessages.length > 0) {
         return next({ message: errorMessages.join(", "), statusCode: 400 });

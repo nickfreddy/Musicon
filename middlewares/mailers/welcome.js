@@ -24,6 +24,7 @@ exports.sendWelcomeEmail = async (req, res, next) => {
       `,
     };
 
+    /* istanbul ignore next */
     transporter.sendMail(options, function (err, info) {
       if (error) {
         next(error);
