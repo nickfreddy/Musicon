@@ -59,7 +59,7 @@ deploy:
     - echo "S3_URL"=$S3_URL >> .env.production
     - npm i --only=prod
     # Restart NodeJS service
-    - npm run stop || true
+    # - npm run stop || true
     - npm run start
   only:
     - production
